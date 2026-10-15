@@ -1,0 +1,45 @@
+<% layout('layout.eta') %>
+
+<h1>budget-webapp</h1>
+
+<p>Recipes directory: <code><%= it.recipesDir %></code></p>
+
+<% if (it.recipeError) { %>
+  <p class="error">Warning: <%= it.recipeError %></p>
+<% } %>
+
+<section>
+  <h2>Available recipe files (<%= it.files.length %>)</h2>
+  <% if (it.files.length === 0) { %>
+    <p>No recipe CSV files found.</p>
+  <% } else { %>
+    <ul>
+      <% it.files.forEach(function (file) { %>
+        <li><%= file %></li>
+      <% }) %>
+    </ul>
+  <% } %>
+</section>
+
+<section>
+  <h2>Charts</h2>
+  <canvas id="spendChart" width="400" height="200"></canvas>
+</section>
+
+<script type="module">
+  import { Chart, registerables } from 'chart.js';
+  Chart.register(...registerables);
+
+  // Placeholder chart for scaffold verification.
+  // eslint-disable-next-line no-new
+  new Chart(document.getElementById('spendChart'), {
+    type: 'bar',
+    data: {
+      labels: ['A', 'B', 'C'],
+      datasets: [{
+        label: 'Placeholder',
+        data: [1, 2, 3],
+      }],
+    },
+  });
+</script>
