@@ -28,6 +28,7 @@ export function parseRecipeCsv(text) {
     columns: true,
     skip_empty_lines: true,
     trim: true,
+    relax_column_count: true,
   });
 
   const headers = records.length > 0 ? Object.keys(records[0]) : [];

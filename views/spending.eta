@@ -1,0 +1,53 @@
+<% layout('layout.eta') %>
+
+<h1>Monthly spending</h1>
+
+<% if (it.error) { %>
+  <p class="error">Warning: <%= it.error %></p>
+<% } %>
+
+<section>
+  <table>
+    <thead>
+      <tr>
+        <th>Month</th>
+        <th>Total CHF</th>
+        <th>Items</th>
+        <th>Top store</th>
+        <th>Top category</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% it.months.forEach(function (month) { %>
+        <tr>
+          <td><a href="/spending/<%= month.month %>"><%= month.month %></a></td>
+          <td><%= it.formatChf(month.total) %></td>
+          <td><%= month.itemCount %></td>
+          <td>
+            <% if (month.topStore) { %>
+              <%= month.topStore.key %> (<%= it.formatChf(month.topStore.value) %>)
+            <% } else { %>-<br><% } %>
+          </td>
+          <td>
+            <% if (month.topCategory) { %>
+              <%= month.topCategory.key %> (<%= it.formatChf(month.topCategory.value) %>)
+            <% } else { %>-<br><% } %>
+          </td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+</section>
+
+<% if (it.months.some((m) => m.nonChfWarnings.length > 0)) { %>
+  <section class="warnings">
+    <h2>Non-CHF entries</h2>
+    <ul>
+      <% it.months.forEach(function (month) { %>
+        <% month.nonChfWarnings.forEach(function (warning) { %>
+          <li><%= month.month %>: <%= warning %></li>
+        <% }) %>
+      <% }) %>
+    </ul>
+  </section>
+<% } %>

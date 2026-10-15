@@ -46,3 +46,27 @@ ul {
 section {
   margin-top: 2rem;
 }
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+th, td {
+  text-align: left;
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid #dee2e6;
+}
+
+th {
+  font-weight: 600;
+  border-bottom: 2px solid #adb5bd;
+}
+
+.warnings {
+  margin-top: 2rem;
+  padding: 1rem;
+  background: #fff3cd;
+  border-radius: 0.25rem;
+}
