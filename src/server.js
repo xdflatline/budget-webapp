@@ -12,6 +12,10 @@ const viewsDir = path.resolve(__dirname, '..', 'views');
 
 const app = express();
 const port = Number(process.env.PORT) || 3000;
+// Default to localhost-only. The /upload endpoint has no auth, so exposing the
+// app on all interfaces would let anyone who can reach this host overwrite the
+// current month's recipe CSV. A HOST env var is provided for tests/advanced
+// setups, but the out-of-the-box binding must be 127.0.0.1.
 const host = process.env.HOST || '127.0.0.1';
 
 // Eta v3 is async-only and resolves templates relative to its `views` root.
