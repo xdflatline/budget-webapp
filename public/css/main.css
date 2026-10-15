@@ -130,4 +130,10 @@ th {
 .store-group td:last-child,
 .store-group th:last-child {
   text-align: right;
+
+.chart-container {
+  position: relative;
+  min-height: 320px;
+  height: 320px;
 }
+
