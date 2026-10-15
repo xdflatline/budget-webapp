@@ -1,0 +1,36 @@
+{
+  "name": "budget-webapp",
+  "version": "0.1.0",
+  "description": "Personal budgeting webapp — monthly spend, category breakdowns, and store trends from recipe CSVs.",
+  "type": "module",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js",
+    "lint": "eslint src tests",
+    "test": "node --test tests/**/*.test.js"
+  },
+  "dependencies": {
+    "chart.js": "^4.4.4",
+    "csv-parse": "^5.5.6",
+    "dotenv": "^16.4.5",
+    "eta": "^3.5.0",
+    "express": "^4.21.1"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.12.0",
+    "eslint": "^9.12.0",
+    "nodemon": "^3.1.7"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "keywords": [
+    "budget",
+    "csv",
+    "express",
+    "eta",
+    "chart.js"
+  ],
+  "license": "MIT"
+}
