@@ -70,3 +70,64 @@ th {
   background: #fff3cd;
   border-radius: 0.25rem;
 }
+
+.breadcrumbs {
+  margin-bottom: 1rem;
+  color: var(--muted);
+}
+
+.breadcrumbs a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.month-summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+}
+
+.summary-card {
+  background: #fff;
+  border: 1px solid #dee2e6;
+  border-radius: 0.25rem;
+  padding: 0.75rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.summary-card .label {
+  font-size: 0.875rem;
+  color: var(--muted);
+}
+
+.summary-card .value {
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+
+.store-group {
+  margin-top: 1.5rem;
+  background: #fff;
+}
+
+.store-group .store-name {
+  text-align: left;
+  background: #e9ecef;
+}
+
+.store-group .store-subtotal {
+  text-align: right;
+  background: #e9ecef;
+}
+
+.store-group th,
+.store-group td {
+  border-bottom: 1px solid #dee2e6;
+}
+
+.store-group td:last-child,
+.store-group th:last-child {
+  text-align: right;
+}

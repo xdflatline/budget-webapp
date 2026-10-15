@@ -1,0 +1,80 @@
+<% layout('layout.eta') %>
+
+<nav class="breadcrumbs">
+  <a href="/spending">Monthly spending</a> / <%= it.monthName %>
+</nav>
+
+<h1><%= it.monthName %></h1>
+
+<section class="month-summary">
+  <div class="summary-card">
+    <span class="label">Total</span>
+    <span class="value"><%= it.formatChf(it.total) %></span>
+  </div>
+  <div class="summary-card">
+    <span class="label">Items</span>
+    <span class="value"><%= it.itemCount %></span>
+  </div>
+  <div class="summary-card">
+    <span class="label">Stores</span>
+    <span class="value"><%= it.storeCount %></span>
+  </div>
+  <div class="summary-card">
+    <span class="label">Top category</span>
+    <span class="value"><%= it.topCategory || '-' %></span>
+  </div>
+  <div class="summary-card">
+    <span class="label">CSV</span>
+    <a class="value" href="/spending/<%= it.month %>.csv">Download</a>
+  </div>
+</section>
+
+<section>
+  <h2>By store</h2>
+  <% it.stores.forEach(function (store) { %>
+    <table class="store-group">
+      <thead>
+        <tr>
+          <th colspan="4" class="store-name"><%= store.name %></th>
+          <th class="store-subtotal"><%= it.formatChf(store.subtotal) %></th>
+        </tr>
+        <tr>
+          <th>Date</th>
+          <th>Category</th>
+          <th colspan="2">Item</th>
+          <th>Price</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% store.items.forEach(function (item) { %>
+          <tr>
+            <td><%= item.Date %></td>
+            <td><%= item.Category %></td>
+            <td colspan="2"><%= item.Item %></td>
+            <td><%= it.formatChf(item.priceChf) %></td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  <% }) %>
+</section>
+
+<section>
+  <h2>By category</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Category</th>
+        <th>Amount</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% it.categories.forEach(function (category) { %>
+        <tr>
+          <td><%= category.name %></td>
+          <td><%= it.formatChf(category.subtotal) %></td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+</section>
