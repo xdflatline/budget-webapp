@@ -33,6 +33,18 @@ The app listens on the port in `.env` (default `3000`).
 |-------------|-------------------------------|---------------------------------|
 | `RECIPES_DIR` | `/home/master/finance/recipes` | Directory with `recipes_YYYY-MM.csv` files |
 | `PORT`        | `3000`                         | HTTP server port                |
+| `HOST`        | `127.0.0.1`                    | Network interface to bind to    |
+
+The server binds to `127.0.0.1` by default so the upload endpoint is not
+reachable from other hosts. Do not change `HOST` to `0.0.0.0` without adding
+authentication first.
+
+## Upload CSV
+
+Visit `http://localhost:3000/upload` to upload a new `recipes_YYYY-MM.csv` file.
+The file is validated by name (`recipes_YYYY-MM.csv`), Content-Type (`text/csv`),
+and header row. The current month's file is overwritten on success, and the
+spending cache is invalidated so `/spending` reflects the new data.
 
 ## Data source
 

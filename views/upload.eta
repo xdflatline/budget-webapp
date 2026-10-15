@@ -1,0 +1,19 @@
+<% layout('layout.eta') %>
+
+<h1>Upload recipe CSV</h1>
+
+<% if (it.error) { %>
+  <p class="error"><%= it.error %></p>
+<% } %>
+
+<form action="/upload" method="POST" enctype="multipart/form-data">
+  <p>
+    <label for="recipe">Recipe CSV file</label><br>
+    <input id="recipe" type="file" name="recipe" accept=".csv" required>
+  </p>
+  <p>
+    <button type="submit">Upload</button>
+  </p>
+</form>
+
+<p>Accepted filename: <code>recipes_YYYY-MM.csv</code></p>
