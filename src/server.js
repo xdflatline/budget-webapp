@@ -3,6 +3,7 @@ import express from 'express';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import indexRoutes from './routes/index.js';
+import uploadRoutes from './routes/upload.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -11,6 +12,11 @@ const viewsDir = path.resolve(__dirname, '..', 'views');
 
 const app = express();
 const port = Number(process.env.PORT) || 3000;
+// Default to localhost-only. The /upload endpoint has no auth, so exposing the
+// app on all interfaces would let anyone who can reach this host overwrite the
+// current month's recipe CSV. A HOST env var is provided for tests/advanced
+// setups, but the out-of-the-box binding must be 127.0.0.1.
+const host = process.env.HOST || '127.0.0.1';
 
 // Eta v3 is async-only and resolves templates relative to its `views` root.
 // Express calls engines with the absolute file path it looked up; we pass that
@@ -34,11 +40,19 @@ app.set('views', viewsDir);
 app.use(express.static(path.resolve(__dirname, '..', 'public')));
 
 app.use('/', indexRoutes);
+app.use('/upload', uploadRoutes);
 
 app.get('/healthz', (_req, res) => {
   res.json({ ok: true });
 });
 
-app.listen(port, () => {
-  console.log(`budget-webapp listening on http://localhost:${port}`);
-});
+// Bind to localhost only. The upload endpoint has no auth, so exposing the
+// app on any network interface would allow anyone who can reach this host to
+// overwrite the current month's recipe CSV.
+if (process.env.NODE_ENV !== 'test') {
+  app.listen(port, host, () => {
+    console.log(`budget-webapp listening on http://${host}:${port}`);
+  });
+}
+
+export default app;
