@@ -70,3 +70,9 @@ th {
   background: #fff3cd;
   border-radius: 0.25rem;
 }
+
+.chart-container {
+  position: relative;
+  min-height: 320px;
+  height: 320px;
+}

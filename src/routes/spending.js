@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { loadAllMonths } from '../lib/ingest.js';
 import { formatChf } from '../lib/format.js';
+import { buildChartData, safeJsonScript } from '../lib/chart-data.js';
 
 const router = Router();
 
@@ -18,11 +19,15 @@ router.get('/spending', async (_req, res) => {
     error = err.message;
   }
 
+  const chartData = months.length > 0 ? buildChartData(months) : null;
+
   return res.render('spending', {
     title: 'Monthly spending',
     months,
     error,
     formatChf,
+    chartData,
+    safeJsonScript,
   });
 });
 
