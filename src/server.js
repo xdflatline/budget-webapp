@@ -3,6 +3,7 @@ import express from 'express';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import indexRoutes from './routes/index.js';
+import spendingRoutes from './routes/spending.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -34,6 +35,7 @@ app.set('views', viewsDir);
 app.use(express.static(path.resolve(__dirname, '..', 'public')));
 
 app.use('/', indexRoutes);
+app.use('/', spendingRoutes);
 
 app.get('/healthz', (_req, res) => {
   res.json({ ok: true });
