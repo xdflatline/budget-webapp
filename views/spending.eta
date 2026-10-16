@@ -39,6 +39,38 @@
   </table>
 </section>
 
+<% if (it.chartData) { %>
+  <section>
+    <h2>Monthly spend</h2>
+    <div class="chart-container">
+      <canvas id="chart-monthly-totals"></canvas>
+    </div>
+    <script type="application/json" id="data-monthly-totals">
+      <%~ it.safeJsonScript(it.chartData.monthlyTotals) %>
+    </script>
+  </section>
+
+  <section>
+    <h2>Spend by category</h2>
+    <div class="chart-container">
+      <canvas id="chart-category-stack"></canvas>
+    </div>
+    <script type="application/json" id="data-category-stack">
+      <%~ it.safeJsonScript(it.chartData.categoryStack) %>
+    </script>
+  </section>
+
+  <section>
+    <h2>Top stores</h2>
+    <div class="chart-container">
+      <canvas id="chart-top-stores"></canvas>
+    </div>
+    <script type="application/json" id="data-top-stores">
+      <%~ it.safeJsonScript(it.chartData.topStores) %>
+    </script>
+  </section>
+<% } %>
+
 <% if (it.months.some((m) => m.nonChfWarnings.length > 0)) { %>
   <section class="warnings">
     <h2>Non-CHF entries</h2>
@@ -51,3 +83,65 @@
     </ul>
   </section>
 <% } %>
+
+<script src="/vendor/chartjs/chart.umd.js"></script>
+<script type="module">
+  function readData(id) {
+    const element = document.getElementById(id);
+    if (!element) throw new Error(`Missing chart data element #${id}`);
+    return JSON.parse(element.textContent);
+  }
+
+  Chart.defaults.responsive = true;
+  Chart.defaults.maintainAspectRatio = false;
+
+  new Chart(
+    document.getElementById('chart-monthly-totals'),
+    {
+      type: 'bar',
+      data: readData('data-monthly-totals'),
+      options: {
+        plugins: {
+          title: { display: true, text: 'Monthly spend' },
+          legend: { display: false },
+        },
+        scales: {
+          x: { title: { display: true, text: 'Month' } },
+          y: { title: { display: true, text: 'CHF' } },
+        },
+      },
+    },
+  );
+
+  new Chart(
+    document.getElementById('chart-category-stack'),
+    {
+      type: 'bar',
+      data: readData('data-category-stack'),
+      options: {
+        plugins: {
+          title: { display: true, text: 'Spend by category' },
+          legend: { position: 'bottom' },
+        },
+        scales: {
+          x: { title: { display: true, text: 'Month' }, stacked: true },
+          y: { title: { display: true, text: 'CHF' }, stacked: true },
+        },
+      },
+    },
+  );
+
+  new Chart(
+    document.getElementById('chart-top-stores'),
+    {
+      type: 'doughnut',
+      data: readData('data-top-stores'),
+      options: {
+        plugins: {
+          title: { display: true, text: 'Top stores' },
+          legend: { position: 'bottom' },
+        },
+      },
+    },
+  );
+</script>
