@@ -37,10 +37,17 @@ app.use(express.static(path.resolve(__dirname, '..', 'public')));
 app.use('/', indexRoutes);
 app.use('/', spendingRoutes);
 
+// Keep Express path parameters un-decoded so '.csv' stays intact in route matching.
+app.set('query parser', 'simple');
+
 app.get('/healthz', (_req, res) => {
   res.json({ ok: true });
 });
 
-app.listen(port, () => {
-  console.log(`budget-webapp listening on http://localhost:${port}`);
-});
+if (import.meta.url === `file://${process.argv[1]}`) {
+  app.listen(port, () => {
+    console.log(`budget-webapp listening on http://localhost:${port}`);
+  });
+}
+
+export default app;
